@@ -88,7 +88,7 @@ public class NameplateRender {
 
 	@SubscribeEvent
 	public static void MenuOptions(GuiScreenEvent.InitGuiEvent.Post event) {
-		if (!ModList.get().isLoaded("betterux") || !ModList.get().isLoaded("mobplusplus") || !ModList.get().isLoaded("cursedblade")) {
+		if (!ModList.get().isLoaded("betterux") && !ModList.get().isLoaded("mobplusplus") && !ModList.get().isLoaded("cursedblade")) {
 			if (event.getGui() instanceof OptionsScreen && mc.world != null) {
 				event.addWidget(new Button(4, mc.getMainWindow().getScaledHeight() - 30, 20, 20, new TranslationTextComponent(""), (x) -> {
 					mc.displayGuiScreen(new ConfirmOpenLinkScreen(NameplateRender::confirmLink, new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/invite/ty6gQaD").getValue(), false));
@@ -101,7 +101,7 @@ public class NameplateRender {
 	@SubscribeEvent
 	public static void onMenuOptionsRenderPre(DrawScreenEvent.Pre event) {
 		if(!(event.getGui() instanceof OptionsScreen)) return;
-		if (!ModList.get().isLoaded("betterux") || !ModList.get().isLoaded("mobplusplus") || !ModList.get().isLoaded("cursedblade")) {
+		if (!ModList.get().isLoaded("betterux") && !ModList.get().isLoaded("mobplusplus") && !ModList.get().isLoaded("cursedblade")) {
 			DiscordBackground();
 		}
 	}
@@ -109,7 +109,7 @@ public class NameplateRender {
 	@SubscribeEvent
 	public static void onMenuOptionsRenderPost(DrawScreenEvent.Post event) {
 		if(!(event.getGui() instanceof OptionsScreen)) return;
-		if (!ModList.get().isLoaded("betterux") || !ModList.get().isLoaded("mobplusplus") || !ModList.get().isLoaded("cursedblade")) {
+		if (!ModList.get().isLoaded("betterux") && !ModList.get().isLoaded("mobplusplus") && !ModList.get().isLoaded("cursedblade")) {
 			DiscordIcon();
 		}
 	}
