@@ -1,6 +1,5 @@
 package com.GenZVirus.SimpleNametag.Commands;
 
-import com.GenZVirus.SimpleNametag.Events.PlayerEvents;
 import com.GenZVirus.SimpleNametag.Network.PacketHandlerCommon;
 import com.GenZVirus.SimpleNametag.Network.Packets.SyncCompoundNBT;
 import com.mojang.brigadier.CommandDispatcher;
@@ -129,6 +128,7 @@ public class setColorCommands {
 		));
 	}
 
+	@SuppressWarnings("resource")
 	private static int setBorderColor(CommandSource source, PlayerEntity target, int RED, int GREEN, int BLUE, int ALPHA) {
 		CompoundNBT ForgeData = target.getPersistentData();
 		CompoundNBT simpleNameplate = ForgeData.getCompound("SimpleNameplate");
@@ -137,33 +137,38 @@ public class setColorCommands {
 		simpleNameplate.putFloat("BLUE", ((float) BLUE / 255));
 		simpleNameplate.putFloat("ALPHA", ((float) ALPHA / 255));
 		CompoundNBT nbt = target.serializeNBT();
-		for (PlayerEntity player : PlayerEvents.players) {
+		for (PlayerEntity player : source.getServer().getPlayerList().getPlayers()) {
 			PacketHandlerCommon.INSTANCE.sendTo(new SyncCompoundNBT(nbt, target.getUniqueID()), ((ServerPlayerEntity) player).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 		}
+		target.getServer().playerDataManager.savePlayerData(target);
 		return 1;
 	}
 	
+	@SuppressWarnings("resource")
 	private static int setBackgroundColor(CommandSource source, PlayerEntity target, int RED, int GREEN, int BLUE, int ALPHA) {
 		CompoundNBT ForgeData = target.getPersistentData();
 		CompoundNBT simpleNameplate = ForgeData.getCompound("SimpleNameplate");
 		int ARGB = ALPHA << 24 | RED << 16 | GREEN << 8 | BLUE;
 		simpleNameplate.putInt("BGColor", ARGB);
 		CompoundNBT nbt = target.serializeNBT();
-		for (PlayerEntity player : PlayerEvents.players) {
+		for (PlayerEntity player : source.getServer().getPlayerList().getPlayers()) {
 			PacketHandlerCommon.INSTANCE.sendTo(new SyncCompoundNBT(nbt, target.getUniqueID()), ((ServerPlayerEntity) player).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 		}
+		target.getServer().playerDataManager.savePlayerData(target);
 		return 1;
 	}
 	
+	@SuppressWarnings("resource")
 	private static int setTextColor(CommandSource source, PlayerEntity target, int RED, int GREEN, int BLUE, int ALPHA) {
 		CompoundNBT ForgeData = target.getPersistentData();
 		CompoundNBT simpleNameplate = ForgeData.getCompound("SimpleNameplate");
 		int ARGB = ALPHA << 24 | RED << 16 | GREEN << 8 | BLUE;
 		simpleNameplate.putInt("TextColor", ARGB);
 		CompoundNBT nbt = target.serializeNBT();
-		for (PlayerEntity player : PlayerEvents.players) {
+		for (PlayerEntity player : source.getServer().getPlayerList().getPlayers()) {
 			PacketHandlerCommon.INSTANCE.sendTo(new SyncCompoundNBT(nbt, target.getUniqueID()), ((ServerPlayerEntity) player).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 		}
+		target.getServer().playerDataManager.savePlayerData(target);
 		return 1;
 	}
 	

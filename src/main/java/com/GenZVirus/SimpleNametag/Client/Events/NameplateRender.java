@@ -81,7 +81,9 @@ public class NameplateRender {
 			return;
 		if (UpdateNBT.NBTs.isEmpty())
 			return;
-		Minecraft.getInstance().player.world.getPlayerByUuid(UpdateNBT.uuids.get(0)).deserializeNBT(UpdateNBT.NBTs.get(0));
+		PlayerEntity player = Minecraft.getInstance().player.world.getPlayerByUuid(UpdateNBT.uuids.get(0));
+		if(player == null) return;
+		player.deserializeNBT(UpdateNBT.NBTs.get(0));
 		UpdateNBT.NBTs.remove(0);
 		UpdateNBT.uuids.remove(0);
 	}

@@ -3,7 +3,6 @@ package com.GenZVirus.SimpleNametag.Util;
 import java.util.List;
 import java.util.UUID;
 
-import com.GenZVirus.SimpleNametag.Events.PlayerEvents;
 import com.GenZVirus.SimpleNametag.Network.PacketHandlerCommon;
 import com.GenZVirus.SimpleNametag.Network.Packets.SyncCompoundNBT;
 import com.google.common.collect.Lists;
@@ -23,8 +22,8 @@ public class UpdateNBT {
 		uuids.add(uuid);
 	}
 
-	public static void updateAllPlayers(UUID uuid) {
-		for (PlayerEntity player : PlayerEvents.players) {
+	public static void updateAllPlayers(UUID uuid, List<ServerPlayerEntity> players) {
+		for (PlayerEntity player : players) {
 			CompoundNBT nbt = player.getPersistentData();
 			if (!nbt.contains("SimpleNameplate")) {
 				createNBT(nbt);
